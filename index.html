@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Country Game</title>
+
+	<script type="text/javascript">
+		function set_country_code(){
+			code = document.getElementById("cc-input").value;
+			console.log("'"+code+"'");
+			document["county-flag"].src = "data/"+code+"/flag.svg";
+			document["county-outline"].src = "data/"+code+"/outline.svg";
+			document.getElementById("country-name-label").innerHTML = get_country_name_from_cc(code);
+		}
+
+		function add_action_listener_to_input(){
+			var input = document.getElementById("cc-input");
+			input.addEventListener("keypress", function(event) {
+			  if (event.key === "Enter") {
+				event.preventDefault();
+				document.getElementById("cc-button").click();
+			  }
+			});
+		}
+
+		function get_country_name_from_cc(cc){
+			const region_names = new Intl.DisplayNames(['de'], { type: 'region' });
+			return region_names.of(cc.toUpperCase());
+		}
+
+		function main(){
+			add_action_listener_to_input()
+		}
+	</script>
+</head>
+
+<body onload="main()" style="background-color:#d0d0d0;">
+	<div id="flag-and-outline">
+		<img name="county-flag" height="200px" src="data/de/flag.svg">
+		<img name="county-outline" height="200px" src="data/de/outline.svg">
+	</div>
+	<label id="country-name-label" style="font-family:sans-serif" for="flag-and-outline">Deutschland</label>
+	<br><br>
+	<input name="cc-input" id="cc-input" type="text" placeholder="county code">
+	<button onclick="set_country_code()" id="cc-button">
+		Change code
+	</button>
+</body>
+</html>
